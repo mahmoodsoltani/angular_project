@@ -1,0 +1,63 @@
+<lib-toastify-toast-container></lib-toastify-toast-container>
+
+<div class="blog-list-container">
+  <h1>Blog List</h1>
+  <!-- Create New Blog Button -->
+  <button class="create-blog-btn" (click)="showCreateForm = !showCreateForm">
+    <span class="material-icons">add_circle</span>
+    {{ showCreateForm ? "Cancel" : "Create New" }}
+  </button>
+
+  <!-- Blog Create Form -->
+  <app-blog-create
+    *ngIf="showCreateForm"
+    (blogCreated)="handleBlogCreated($event)"
+  >
+  </app-blog-create>
+  <!-- Blog List -->
+  <div *ngFor="let blog of blogs" class="blog-item card">
+    <div class="blog-header">
+      <span class="blog-title"
+        >{{ blog.title }}_
+        <span class="blog-date">{{ blog.date | date }}</span></span
+      >
+
+      <!-- Button group to align the buttons to the right -->
+      <div class="button-group">
+        <button class="edit-btn" (click)="editBlog(blog)">
+          <span class="material-icons">edit</span>
+        </button>
+        <button class="delete-btn" (click)="deleteBlog(blog)">
+          <span class="material-icons">delete</span>
+        </button>
+        <button class="show_btn" (click)="toggleBlogDetail(blog)">
+          <span *ngIf="!blog.showDetail" class="material-icons"
+            >visibility</span
+          >
+          <span *ngIf="blog.showDetail" class="material-icons"
+            >visibility_off</span
+          >
+        </button>
+      </div>
+    </div>
+
+    <!-- Blog Detail Section -->
+    <div *ngIf="blog.showDetail" class="blog-detail">
+      <app-blog-detail *ngIf="!blog.showEdit" [blog]="blog"></app-blog-detail>
+
+      <!-- Edit Button with Material Icon -->
+    </div>
+
+    <!-- Blog Detail Section -->
+    <div *ngIf="blog.showEdit" class="blog-detail">
+      <!-- Blog Edit Form -->
+      <app-blog-edit
+        *ngIf="blog.showEdit"
+        [blog]="blog"
+        (editCancelled)="handleEditCancelled(blog)"
+        (blogUpdated)="handleBlogUpdated($event)"
+      >
+      </app-blog-edit>
+    </div>
+  </div>
+</div>

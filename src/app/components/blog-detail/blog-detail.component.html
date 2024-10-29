@@ -1,0 +1,11 @@
+<div class="blog-detail" *ngIf="blog">
+  <h2>{{ blog.title }}</h2>
+  <p class="blog-meta">
+    <span><strong>Author:</strong> {{ blog.author }}</span>
+    <span><strong>Date:</strong> {{ blog.date | date }}</span>
+  </p>
+  <div class="blog-content">
+    <p><strong>Content:</strong></p>
+    <p>{{ blog.content }}</p>
+  </div>
+</div>
